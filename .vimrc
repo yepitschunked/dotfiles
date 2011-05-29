@@ -19,7 +19,6 @@ set smarttab
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
 set number			" show line numbers
-set clipboard=unnamed
 
 " Better search options
 set ignorecase		
@@ -54,6 +53,7 @@ let g:CommandTMatchWindowAtTop = 1
 let g:CommandTMaxHeight = 15
 let g:CommandTMaxDepth = 20
 let g:CommandTMaxFiles = 15000
+let g:CommandTCancelMap=['<ESC>','<C-c>']
 
 set wildignore +=.git,vendor/bundle
 
