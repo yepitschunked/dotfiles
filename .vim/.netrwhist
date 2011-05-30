@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/victor/.rvm/gems/ruby-1.9.2-p180/gems/i18n-0.5.0'
+let g:netrw_dirhist_2='/Users/victor/.rbxdb'
+let g:netrw_dirhist_3='/Users/victor/.rvm/gems/ree-1.8.7-2011.03/gems/bundler-1.0.12'
