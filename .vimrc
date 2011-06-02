@@ -1,3 +1,10 @@
+" Tell vim to remember certain things when we exit
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
 " YOINKED FROM CCOWART!!!
 set nocompatible
 
@@ -27,7 +34,6 @@ set incsearch		" incremental search
 set hls				" highlight your results
 
 " Concessions to modernity
-set guifont=Monaco:h12
 set mouse=a
 set t_Co=256
 
@@ -35,13 +41,18 @@ set t_Co=256
 syntax on
 filetype plugin on
 filetype indent on
-if has('gui_running')
-	colorscheme railscasts
-else
-	let g:solarized_termcolors=16
-	set background=light
-	colorscheme solarized
+" Autocommands
+au BufNewFile,BufRead notes iab <expr> dts strftime("%d %B %Y %I:%M%p")
+if filereadable(expand('~/.local_vimrc'))
+	au VimEnter * so ~/.local_vimrc
 endif
+" Tell vim to remember certain things when we exit
+"  '10  :  marks will be remembered for up to 10 previously edited files
+"  "100 :  will save up to 100 lines for each register
+"  :20  :  up to 20 lines of command-line history will be remembered
+"  %    :  saves and restores the buffer list
+"  n... :  where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
 
 " Lets you ctrl+hjkl to move between splits
 let g:miniBufExplMapWindowNavVim = 1
