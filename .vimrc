@@ -29,6 +29,7 @@ set number			" show line numbers
 
 " Better search options
 set smartcase		
+set ignorecase
 set incsearch		" incremental search
 set hls				" highlight your results
 

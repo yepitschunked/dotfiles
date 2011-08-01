@@ -1,8 +1,11 @@
-URxvt.perl-ext-common:  default,url-select
-URxvt.keysym.M-u:       perl:url-select:select_next
-URxvt.urlLauncher:      firefox
+URxvt.perl-ext-common:  default,matcher,tabbed
+URxvt.urlLauncher:      x-www-browser
+URxvt.matcher.button: 1
 URxvt.underlineURLs:    true
-URxvt.font: xft:Terminus:pixelsize=12
-URxvt.boldFont: xft:Terminus:pixelsize=12
-
-urxvt*termName: xterm-color
+URxvt.saveLines: 20000
+URxvt.scrollWithBuffer: false
+URxvt.scrollTtyKeypress: true
+Xft.dpi:120 
+Xft.antialias:false
+Xft.hinting: hintmedium
+URxvt.font: xft:Terminus:size=10

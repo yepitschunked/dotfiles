@@ -16,4 +16,4 @@ fi
 # exec startxfce4
 # ...or the Window Manager of your choice
 if [ -f ~/.Xdefaults ]; then xrdb -merge ~/.Xdefaults; fi
-exec ssh-agent ck-launch-session awesome
+exec ssh-agent 
