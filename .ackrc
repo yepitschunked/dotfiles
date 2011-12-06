@@ -1,4 +1,3 @@
-.ackrc 
 --type-set=ruby=.haml,less,erb,rb,js,rjs,sass
 --group
 --nosql
