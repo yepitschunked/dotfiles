@@ -20,15 +20,14 @@ set noexpandtab		" Let tabs be tabs
 set showmatch		" Match Parens
 set matchtime=500	" Match for half a second
 set autoindent		" Always have autoindenting on
-set shiftwidth=4	" Autoindenting uses this spacing
-set tabstop=4		" Show tabs as 4 spaces
+set shiftwidth=2	" Autoindenting uses this spacing
+set tabstop=2		" Show tabs as 4 spaces
 set smarttab		
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
 set number			" show line numbers
 
 " Better search options
-set smartcase		
 set incsearch		" incremental search
 set hls				" highlight your results
 
@@ -45,6 +44,14 @@ au BufNewFile,BufRead notes iab <expr> dts strftime("%d %B %Y %I:%M%p")
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 if filereadable($HOME . '/.local_vimrc')
 	au VimEnter * so ~/.local_vimrc
+endif
+
+set background=dark
+let g:solarized_termcolors=256
+colorscheme zenburn
+
+if has('gui_running')
+	set guifont=Inconsolata:h14
 endif
 
 " Lets you ctrl+hjkl to move between splits
