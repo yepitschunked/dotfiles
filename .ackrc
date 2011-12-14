@@ -1,4 +1,4 @@
---type-set=ruby=.haml,less,erb,rb,js,rjs,sass
+--type-set=ruby=.haml,less,erb,rb,js,rjs,sass,scss
 --group
 --nosql
 --smart-case

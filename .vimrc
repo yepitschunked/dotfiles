@@ -26,6 +26,8 @@ set smarttab
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
 set number			" show line numbers
+set cursorline
+let g:zenburn_unified_CursorColumn = 1
 
 " Better search options
 set incsearch		" incremental search
@@ -46,13 +48,13 @@ if filereadable($HOME . '/.local_vimrc')
 	au VimEnter * so ~/.local_vimrc
 endif
 
-set background=dark
 let g:solarized_termcolors=256
-colorscheme zenburn
 
+set background=dark
 if has('gui_running')
-	set guifont=Inconsolata:h14
+	set guifont=Inconsolata_XL:h12
 endif
+colorscheme solarized
 
 " Lets you ctrl+hjkl to move between splits
 let g:miniBufExplMapWindowNavVim = 1
@@ -106,4 +108,5 @@ set formatoptions=cqnb
 map !s :RunSpecLine<CR>
 " run full rspec file
 map !S :RunSpec<CR>
+let g:RspecOpts = "--format documentation"
  
