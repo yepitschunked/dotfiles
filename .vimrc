@@ -16,11 +16,11 @@ set backspace=eol,indent,start
 set writebackup
 
 set ruler		" Show the cursor position all the time 
-set noexpandtab		" Let tabs be tabs
+set expandtab		
 set showmatch		" Match Parens
 set matchtime=500	" Match for half a second
 set autoindent		" Always have autoindenting on
-set shiftwidth=4	" Autoindenting uses this spacing
+set shiftwidth=2	" Autoindenting uses this spacing
 set tabstop=4		" Show tabs as 4 spaces
 set smarttab		
 set shiftround		" Round to the nearest indent level

@@ -1,11 +1,14 @@
-URxvt.perl-ext-common:  default,matcher,tabbed
+URxvt.perl-ext-common:  default,matcher,tabbed,searchable-scrollback
 URxvt.urlLauncher:      x-www-browser
 URxvt.matcher.button: 1
 URxvt.underlineURLs:    true
 URxvt.saveLines: 20000
 URxvt.scrollWithBuffer: false
 URxvt.scrollTtyKeypress: true
-Xft.dpi:120 
-Xft.antialias:false
-Xft.hinting: hintmedium
-URxvt.font: xft:Terminus:size=10
+
+URxvt.depth: 24
+
+Xft.dpi:96
+URxvt.font: xft:Inconsolata:style=Medium:size=12:antialias=true:hinting=true:hintstyle=1
+Xft.rgba: rgb
+URxvt.letterSpace: -1

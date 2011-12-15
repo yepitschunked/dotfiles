@@ -28,11 +28,13 @@
 #define S_base2         #eee8d5
 #define S_base3         #fdf6e3
 #define S_yellow        #b58900
+#define S_byellow       #f5f107
 #define S_orange        #cb4b16
 #define S_red           #dc322f
 #define S_magenta       #d33682
 #define S_violet        #6c71c4
 #define S_blue          #268bd2
+#define S_bblue         #4F97A1
 #define S_cyan          #2aa198
 #define S_green         #859900
 
@@ -58,11 +60,11 @@
 
 !! yellow dark/light
 *color3:                S_yellow
-*color11:               S_base00
+*color11:               S_byellow
 
 !! blue dark/light
 *color4:                S_blue
-*color12:               S_base0
+*color12:               S_bblue
 
 !! magenta dark/light
 *color5:                S_magenta
