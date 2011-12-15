@@ -21,11 +21,13 @@ set showmatch		" Match Parens
 set matchtime=500	" Match for half a second
 set autoindent		" Always have autoindenting on
 set shiftwidth=2	" Autoindenting uses this spacing
-set tabstop=4		" Show tabs as 4 spaces
+set tabstop=2		" Show tabs as 4 spaces
 set smarttab		
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
 set number			" show line numbers
+set cursorline
+let g:zenburn_unified_CursorColumn = 1
 
 " Better search options
 set smartcase		
@@ -43,16 +45,18 @@ filetype plugin on
 filetype indent on
 " Autocommands
 au BufNewFile,BufRead notes iab <expr> dts strftime("%d %B %Y %I:%M%p")
-if filereadable(expand('~/.local_vimrc'))
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+if filereadable($HOME . '/.local_vimrc')
 	au VimEnter * so ~/.local_vimrc
 endif
-" Tell vim to remember certain things when we exit
-"  '10  :  marks will be remembered for up to 10 previously edited files
-"  "100 :  will save up to 100 lines for each register
-"  :20  :  up to 20 lines of command-line history will be remembered
-"  %    :  saves and restores the buffer list
-"  n... :  where to save the viminfo files
-set viminfo='10,\"100,:20,%,n~/.viminfo
+
+let g:solarized_termcolors=256
+
+set background=dark
+if has('gui_running')
+	set guifont=Inconsolata_XL:h12
+endif
+colorscheme solarized
 
 " Lets you ctrl+hjkl to move between splits
 let g:miniBufExplMapWindowNavVim = 1
@@ -106,4 +110,5 @@ set formatoptions=cqnb
 map !s :RunSpecLine<CR>
 " run full rspec file
 map !S :RunSpec<CR>
+let g:RspecOpts = "--format documentation"
  

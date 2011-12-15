@@ -4,7 +4,7 @@
 
 #SVN shortcuts
 export EDITOR=vim
-export LESS="-XR"
+export LESS="-iMJXR"
 
 export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
 export HISTSIZE=100000                   # big big history
@@ -15,13 +15,12 @@ shopt -s histappend
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-export PATH=~/.cabal/bin:/opt/local/bin:/opt/local/sbin:/usr/bin/vendor_perl:$PATH
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
-function parse_git_branch
-{
-  git branch 2> /dev/null | grep \* | python -c "print '['+raw_input()[2:]+']'" 2> /dev/null
-}
-
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+	  echo "("${ref#refs/heads/}")"
+	}
 
 # Comment in the above and uncomment this below for a color prompt
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(parse_git_branch)\$ '
@@ -82,7 +81,5 @@ case "$TERM" in
         TERM=rxvt-unicode
         ;;
 esac
-
-if [ -e "~/fast_dev" ]; then source fast_dev; fi 
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
