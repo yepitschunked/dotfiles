@@ -105,6 +105,10 @@ command! WQA wqa
 set formatoptions=cqnb
 "set formatoptions+=ta2
 
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+
 " Mappings
 " run one rspec example or describe block based on cursor position
 map !s :RunSpecLine<CR>
