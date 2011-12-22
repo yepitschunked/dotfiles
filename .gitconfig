@@ -1,0 +1,14 @@
+[web]
+	browser = open
+[color]
+	ui = true
+[core]
+	editor = vim
+	excludesfile = /Users/victor/.gitignore_global
+[user]
+	name = Victor Lin
+	email = victorhlin@gmail.com
+[github]
+	user = wonnage
+[push]
+	default = current

@@ -22,8 +22,21 @@ function parse_git_branch {
 	  echo "("${ref#refs/heads/}")"
 	}
 
+function rvm_gemset {
+  if [[ `type rvm | head -1` == "rvm is a function" ]]; then 
+    local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}');
+    if [ "$gemset" = "" ]; then
+      return;
+    else
+      echo "(gs:"${gemset}")";
+    fi
+  else
+    return
+  fi
+}
+
 # Comment in the above and uncomment this below for a color prompt
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] $(parse_git_branch)\$ '
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)$(rvm_gemset)\$ '
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in

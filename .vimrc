@@ -50,13 +50,11 @@ if filereadable($HOME . '/.local_vimrc')
 	au VimEnter * so ~/.local_vimrc
 endif
 
-let g:solarized_termcolors=256
-
 set background=dark
 if has('gui_running')
 	set guifont=Inconsolata_XL:h12
 endif
-colorscheme solarized
+colorscheme jellybeans
 
 " Lets you ctrl+hjkl to move between splits
 let g:miniBufExplMapWindowNavVim = 1
