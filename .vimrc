@@ -7,9 +7,28 @@
 set viminfo='10,\"100,:20,%,n~/.viminfo
 " YOINKED FROM CCOWART!!!
 set nocompatible
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails'
+Bundle 'Lokaltog/vim-powerline'
+Bundle 'kien/ctrlp.vim'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/nerdtree'
+Bundle 'mileszs/ack.vim'
+Bundle 'xolox/vim-session'
+Bundle 'skwp/vim-rspec'
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-h> <C-w>h
+map <C-l> <C-w>l
 
 " Make a backup before overwriting a file.  The backup is removed 
 " after the file was successfully written
@@ -56,28 +75,21 @@ if has('gui_running')
 endif
 colorscheme jellybeans
 
-" Lets you ctrl+hjkl to move between splits
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplMapWindowNavArrows = 1
-let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1 
-let g:miniBufExplUseSingleClick = 1
+set laststatus=2
 
-let g:CommandTMatchWindowAtTop = 1
-let g:CommandTMaxHeight = 15
-let g:CommandTMaxDepth = 20
-let g:CommandTMaxFiles = 15000
-let g:CommdTSelectPrevMap=['<Esc>OA', '<Up>']
-let g:CommdTSelectNextMap=['<Esc>OB', '<Down>']
-
-set wildignore +=.git,vendor/bundle
+set wildignore +=.git,vendor/bundle,.swp.orig
 
 let Tlist_Use_Right_Window = 1
 
 " Map F4 to show taglist (requires ctags+ctags vim plugin)
 map <F4> :Tlist<CR>
-map <Leader>f :CommandT <CR>
-map <Leader>b :FufBuffer <CR>
+map <Leader>f :CtrlP<CR>
+
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_jump_to_buffer = 0
+let g:ctrlp_use_caching = 0
+let g:ctrlp_dotfiles = 0
+let g:ctrlp_highlight_match = [1, 'Constant']
 
 " Fix the damn typos
 command! Q  quit
