@@ -5,6 +5,7 @@
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
+autocmd!
 " YOINKED FROM CCOWART!!!
 set nocompatible
 set rtp+=~/.vim/bundle/vundle/
@@ -22,6 +23,10 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'mileszs/ack.vim'
 Bundle 'xolox/vim-session'
 Bundle 'skwp/vim-rspec'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'scrooloose/syntastic'
+Bundle 'tpope/vim-surround'
+Bundle 'majutsushi/tagbar'
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
@@ -68,28 +73,39 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 if filereadable($HOME . '/.local_vimrc')
 	au VimEnter * so ~/.local_vimrc
 endif
+au BufNewFile * :exe ': !mkdir -p ' . escape(fnamemodify(bufname('%'),':p:h'),'#% \\')
 
-set background=dark
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+let g:Powerline_symbols = 'compatible'
 if has('gui_running')
+  set background=light
 	set guifont=Inconsolata_XL:h12
+  colorscheme github
+else
+  set background=dark
+  colorscheme jellybeans
 endif
-colorscheme jellybeans
+
+" Highlight unwanted whitespace
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 
 set laststatus=2
 
-set wildignore +=.git,vendor/bundle,.swp.orig
+set wildignore +=.git,vendor/bundle,.swp.orig,*/tmp/*
 
 let Tlist_Use_Right_Window = 1
 
 " Map F4 to show taglist (requires ctags+ctags vim plugin)
-map <F4> :Tlist<CR>
+map <F4> :TagbarToggle<CR>
 map <Leader>f :CtrlP<CR>
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
 
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_jump_to_buffer = 0
-let g:ctrlp_use_caching = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_highlight_match = [1, 'Constant']
+let g:ctrlp_lazy_update = 50
+let g:ctrlp_working_path_mode = 0
 
 " Fix the damn typos
 command! Q  quit
@@ -125,4 +141,3 @@ map !s :RunSpecLine<CR>
 " run full rspec file
 map !S :RunSpec<CR>
 let g:RspecOpts = "--format documentation"
- 
