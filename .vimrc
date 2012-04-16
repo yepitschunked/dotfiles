@@ -5,6 +5,7 @@
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
+set tags +=gems.tags
 autocmd!
 " YOINKED FROM CCOWART!!!
 set nocompatible
@@ -26,7 +27,6 @@ Bundle 'skwp/vim-rspec'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-surround'
-Bundle 'majutsushi/tagbar'
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
@@ -38,6 +38,7 @@ map <C-l> <C-w>l
 " Make a backup before overwriting a file.  The backup is removed 
 " after the file was successfully written
 set writebackup
+set equalalways
 
 set ruler		" Show the cursor position all the time 
 set expandtab		
@@ -45,7 +46,7 @@ set showmatch		" Match Parens
 set matchtime=500	" Match for half a second
 set autoindent		" Always have autoindenting on
 set shiftwidth=2	" Autoindenting uses this spacing
-set tabstop=2		" Show tabs as 4 spaces
+set tabstop=2	 	" Show tabs as 4 spaces
 set smarttab		
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
@@ -68,7 +69,6 @@ syntax on
 filetype plugin on
 filetype indent on
 " Autocommands
-au BufNewFile,BufRead notes iab <expr> dts strftime("%d %B %Y %I:%M%p")
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 if filereadable($HOME . '/.local_vimrc')
 	au VimEnter * so ~/.local_vimrc
@@ -88,6 +88,8 @@ endif
 
 " Highlight unwanted whitespace
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+
+autocmd VimResized * wincmd = 
 
 set laststatus=2
 
