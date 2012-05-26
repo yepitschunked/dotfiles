@@ -5,13 +5,11 @@
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
-set tags +=gems.tags
 autocmd!
-" YOINKED FROM CCOWART!!!
 set nocompatible
 set rtp+=~/.vim/bundle/vundle/
+set clipboard=unnamed
 call vundle#rc()
-
 " let Vundle manage Vundle
 " required! 
 Bundle 'gmarik/vundle'
@@ -22,18 +20,22 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mileszs/ack.vim'
-Bundle 'xolox/vim-session'
 Bundle 'skwp/vim-rspec'
-Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-surround'
+Bundle 'briancollins/vim-jst'
+Bundle 'rson/vim-conque'
+Bundle 'ap/vim-css-color'
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
+
+" move between splits without having to C-w first
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
+
+let g:ConqueTerm_TERM = 'xterm'
 
 " Make a backup before overwriting a file.  The backup is removed 
 " after the file was successfully written
@@ -41,7 +43,7 @@ set writebackup
 set equalalways
 
 set ruler		" Show the cursor position all the time 
-set expandtab		
+set expandtab " death to spaces		
 set showmatch		" Match Parens
 set matchtime=500	" Match for half a second
 set autoindent		" Always have autoindenting on
@@ -51,11 +53,9 @@ set smarttab
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
 set number			" show line numbers
-set cursorline
-let g:zenburn_unified_CursorColumn = 1
+set cursorline " highlight current line
 
 " Better search options
-set smartcase		
 set ignorecase
 set incsearch		" incremental search
 set hls				" highlight your results
@@ -69,17 +69,18 @@ syntax on
 filetype plugin on
 filetype indent on
 " Autocommands
+
+" Put cursor where you were when you last edited file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-if filereadable($HOME . '/.local_vimrc')
-	au VimEnter * so ~/.local_vimrc
-endif
+
+" :e ~/non_existent/directory/file.html will create the intermediate
+" directories
 au BufNewFile * :exe ': !mkdir -p ' . escape(fnamemodify(bufname('%'),':p:h'),'#% \\')
 
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 let g:Powerline_symbols = 'compatible'
 if has('gui_running')
-  set background=light
 	set guifont=Inconsolata_XL:h12
+  set background=light
   colorscheme github
 else
   set background=dark
@@ -87,8 +88,9 @@ else
 endif
 
 " Highlight unwanted whitespace
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+let ruby_space_errors = 1
 
+" Make sure splits stay sized when window is resized
 autocmd VimResized * wincmd = 
 
 set laststatus=2
@@ -135,7 +137,7 @@ set formatoptions=cqnb
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
 
-set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
+set textwidth=80
 
 " Mappings
 " run one rspec example or describe block based on cursor position
