@@ -20,11 +20,17 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mileszs/ack.vim'
-Bundle 'skwp/vim-rspec'
 Bundle 'scrooloose/syntastic'
 Bundle 'briancollins/vim-jst'
-Bundle 'rson/vim-conque'
 Bundle 'ap/vim-css-color'
+Bundle 'grillpanda/github-colorscheme'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'vim-scripts/ruby-matchit'
+Bundle 'vim-scripts/jellybeans.vim'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'rson/vim-conque'
+Bundle 'skwp/vim-ruby-conque'
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
@@ -34,8 +40,6 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
-
-let g:ConqueTerm_TERM = 'xterm'
 
 " Make a backup before overwriting a file.  The backup is removed 
 " after the file was successfully written
@@ -73,20 +77,14 @@ filetype indent on
 " Put cursor where you were when you last edited file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-" :e ~/non_existent/directory/file.html will create the intermediate
-" directories
-au BufNewFile * :exe ': !mkdir -p ' . escape(fnamemodify(bufname('%'),':p:h'),'#% \\')
-
 let g:Powerline_symbols = 'compatible'
+let g:SuperTabDefaultCompletionType = "context"
 if has('gui_running')
-	set guifont=Inconsolata_XL:h12
-  set background=light
+  set guifont=Inconsolata_XL:h12
   colorscheme github
 else
-  set background=dark
   colorscheme jellybeans
 endif
-
 " Highlight unwanted whitespace
 let ruby_space_errors = 1
 
@@ -110,6 +108,7 @@ let g:ctrlp_dotfiles = 0
 let g:ctrlp_highlight_match = [1, 'Constant']
 let g:ctrlp_lazy_update = 50
 let g:ctrlp_working_path_mode = 0
+let g:ctrlp_custom_ignore = 'public\/coffeescripts'
 
 " Fix the damn typos
 command! Q  quit
@@ -139,9 +138,7 @@ autocmd BufReadPost fugitive://* set bufhidden=delete
 
 set textwidth=80
 
-" Mappings
-" run one rspec example or describe block based on cursor position
-map !s :RunSpecLine<CR>
+map !s :call RunRspecCurrentLineConque()<CR>
 " run full rspec file
-map !S :RunSpec<CR>
-let g:RspecOpts = "--format documentation"
+map !S :call RunRspecCurrentFileConque()<CR>
+runtime! macros/matchit.vim

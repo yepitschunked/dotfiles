@@ -2,3 +2,5 @@
 --group
 --nosql
 --smart-case
+--ignore-dir=compiled
+--ignore-dir=assets
