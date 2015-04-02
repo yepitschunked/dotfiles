@@ -3,4 +3,7 @@
 --nosql
 --smart-case
 --ignore-dir=compiled
+--ignore-dir=target
 --ignore-dir=assets
+--ignore-dir=generated
+--ignore-dir=log

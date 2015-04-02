@@ -1,45 +1,71 @@
-fpath=(~/.zsh/completion $fpath)
-setopt prompt_subst
-autoload -U compinit
-compinit
-source ~/.zsh/completion/npm.plugin.zsh
-source ~/.zsh/completion-settings.zsh
-source ~/.zsh/termsupport.zsh
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
 
-source ~/.zsh/vcs_info.zsh
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="candy"
+setopt incappendhistory
 
-export EDITOR=vim
-export VISUAL=vim
-export PAGER='less'
-export LESS="-iMJXR"
-export CLICOLOR=true
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Browser (Default)
-if [[ "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
-fi
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
 
-source $HOME/.aliases
+# Uncomment this to disable bi-weekly auto-update checks
+DISABLE_AUTO_UPDATE="true"
 
-local rvm_ruby=' [$(rvm-prompt)]'
-local git_prompt='${vcs_info_msg_0_}'
-export PROMPT="%F{135}%n%f:%F{118}%~%f${git_prompt}%f${rvm_ruby}
-$ "
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
 
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
 
-## Command history configuration
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-setopt append_history
-setopt extended_history
-setopt hist_expire_dups_first
-setopt hist_ignore_dups # ignore duplication command history list
-setopt hist_ignore_space
-setopt hist_verify
-setopt inc_append_history
-setopt share_history # share command history data
+# Uncomment following line if you want to disable command autocorrection
+DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+export RAILS_ENV='development'
+
+export PATH=$PATH:/opt/twitter/bin:/opt/twitter/sbin:/usr/local/mysql/bin:/Users/vlin/bin:/Users/vlin/.twitools/src/twitter-utilities/sbt:/Users/vlin/.twitools/src/twitter-utilities/sbt11:/Users/vlin/.twitools/src/twitter-utilities/bin
+
+export CC=/opt/twitter/bin/gcc-4.2
+export LC_CTYPE=en_US.UTF-8
+export CLICOLOR=1
+export HISTCONTROL=erasedups
+export HISTSIZE=100000
+
+## nvm
+[[ -e "/opt/twitter/nvm/nvm.sh" ]] && source "/opt/twitter/nvm/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+source ~/.local.bash
+
+function git_prompt_info() {
+  if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
+    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
+    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  fi
+}
+
+

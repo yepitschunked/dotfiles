@@ -1,14 +1,16 @@
-[web]
-	browser = open
-[color]
-	ui = true
-[core]
-	editor = vim
-	excludesfile = /Users/victor/.gitignore_global
 [user]
 	name = Victor Lin
-	email = victorhlin@gmail.com
-[github]
-	user = wonnage
+	email = vlin@twitter.com
+[diff]
+	renames = true
 [push]
 	default = current
+[color]
+	ui = true
+[merge]
+	tool = fugitive
+	renamelimit = 3000
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[http]
+	postBuffer = 524288000

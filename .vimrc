@@ -10,30 +10,47 @@ set nocompatible
 set rtp+=~/.vim/bundle/vundle/
 set clipboard=unnamed
 call vundle#rc()
+
 " let Vundle manage Vundle
 " required! 
 Bundle 'gmarik/vundle'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'kien/ctrlp.vim'
-Bundle 'ervandew/supertab'
+Bundle 'bling/vim-airline'
 Bundle 'scrooloose/nerdtree'
 Bundle 'mileszs/ack.vim'
 Bundle 'scrooloose/syntastic'
-Bundle 'briancollins/vim-jst'
-Bundle 'ap/vim-css-color'
-Bundle 'grillpanda/github-colorscheme'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'vim-scripts/ruby-matchit'
-Bundle 'vim-scripts/jellybeans.vim'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'rson/vim-conque'
-Bundle 'skwp/vim-ruby-conque'
+Bundle 'gorodinskiy/vim-coloresque'
+Bundle 'mustache/vim-mode'
+Bundle 'chriskempson/base16-vim'
+Bundle 'majutsushi/tagbar'
+Bundle 'jnurmine/zenburn'
+Plugin 'pangloss/vim-javascript'
+Plugin 'ervandew/supertab'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'wincent/Command-T'
+
+let g:ctrlp_map='<leader>f'
+let g:ctrlp_show_hidden=0
+let g:ctrlp_match_window_reversed=1
+let g:ctrlp_match_window_bottom=0
+let g:ctrlp_max_height=30
+let g:ctrlp_working_path_mode='a'
+let g:ctrlp_max_files=0
+nnoremap <leader>f :CommandT<CR>
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
+
+let g:ackprg = '/opt/twitter/bin/ag --nogroup --nocolor --column'
+let g:CommandTFileScanner = "find"
+let g:CommandTMatchWindowAtTop = 1
+let g:CommandTMatchWindowReverse = 1
+let g:CommandTTraverseSCM = "pwd"
+
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
 " move between splits without having to C-w first
 map <C-j> <C-w>j
@@ -60,6 +77,7 @@ set number			" show line numbers
 set cursorline " highlight current line
 
 " Better search options
+set smartcase
 set ignorecase
 set incsearch		" incremental search
 set hls				" highlight your results
@@ -77,38 +95,31 @@ filetype indent on
 " Put cursor where you were when you last edited file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-let g:Powerline_symbols = 'compatible'
-let g:SuperTabDefaultCompletionType = "context"
 if has('gui_running')
-  set guifont=Inconsolata_XL:h12
-  colorscheme github
+  set guifont=Inconsolata\ XL:h12
+  set antialias
+  set bg=dark
+  colorscheme base16-railscasts
 else
+  set bg=dark
   colorscheme jellybeans
 endif
-" Highlight unwanted whitespace
-let ruby_space_errors = 1
+let g:tagbar_ctags_bin="/opt/twitter/bin/ctags"
+
+" Show trailing whitepace and spaces before a tab:
+highlight ExtraWhitespace ctermbg=Red guibg=Red
+autocmd Syntax * syn match ExtraWhitespace /\s\+$/ containedin=ALL
 
 " Make sure splits stay sized when window is resized
-autocmd VimResized * wincmd = 
+autocmd VimResized * wincmd =
 
 set laststatus=2
 
-set wildignore +=.git,vendor/bundle,.swp.orig,*/tmp/*
-
+set wildignore +=.git,vendor/bundle,.swp.orig,*/tmp/*,*.txt,*.class,*/macaw/target/*,*/node_modules/*,*/target/*
 let Tlist_Use_Right_Window = 1
 
 " Map F4 to show taglist (requires ctags+ctags vim plugin)
-map <F4> :TagbarToggle<CR>
-map <Leader>f :CtrlP<CR>
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
-
-let g:ctrlp_match_window_bottom = 0
-let g:ctrlp_jump_to_buffer = 0
-let g:ctrlp_dotfiles = 0
-let g:ctrlp_highlight_match = [1, 'Constant']
-let g:ctrlp_lazy_update = 50
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_custom_ignore = 'public\/coffeescripts'
 
 " Fix the damn typos
 command! Q  quit
@@ -135,10 +146,14 @@ set formatoptions=cqnb
 "set formatoptions+=ta2
 
 autocmd BufReadPost fugitive://* set bufhidden=delete
+autocmd FileType scala 2match ErrorMsg '\%120v.'
 
 set textwidth=80
 
-map !s :call RunRspecCurrentLineConque()<CR>
-" run full rspec file
-map !S :call RunRspecCurrentFileConque()<CR>
 runtime! macros/matchit.vim
+
+let g:mustache_abbreviations = 1
+
+autocmd QuickFixCmdPost *grep* cwindow
+set shell=zsh
+

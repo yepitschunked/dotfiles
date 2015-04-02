@@ -1,0 +1,11 @@
+## To install tools, simply add a line here. Here are some examples to get started.
+/home/aurora/tools/client
+/home/vlin/tools/scalastyle
+/home/observe/tools/user
+#/home/ksweeney/tools/helloworld
+/home/devprod/release/tools/jira/
+/home/devprod/tools/source/git.@NATIVE@
+/home/devprod/git-review
+/home/devprod/packer
+/home/devprod/iron
+/home/cuckooshrike/tools/cli
