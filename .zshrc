@@ -1,71 +1,129 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+zmodload zsh/zprof
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-ZSH_THEME="candy"
-setopt incappendhistory
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/victor_lin/.oh-my-zsh"
 
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="pygmalion"
 
-# Set to this to use case-sensitive completion
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment this to disable bi-weekly auto-update checks
-DISABLE_AUTO_UPDATE="true"
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-# Uncomment to change how often before auto-updates occur? (in days)
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
-# Uncomment following line if you want to disable colors in ls
+# Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
-# Uncomment following line if you want to disable autosetting terminal title.
+# Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
-# Uncomment following line if you want to disable command autocorrection
-DISABLE_CORRECTION="true"
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-# Uncomment following line if you want red dots to be displayed while waiting for completion
+# Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
-# Uncomment following line if you want to disable marking untracked files under
-# VCS as dirty. This makes repository status check for large repositories much,
-# much faster.
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(gitfast)
 
 source $ZSH/oh-my-zsh.sh
 
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+setopt incappendhistory
+alias vim="mvim -v"
 export RAILS_ENV='development'
 
-export PATH=$PATH:/opt/twitter/bin:/opt/twitter/sbin:/usr/local/mysql/bin:/Users/vlin/bin:/Users/vlin/.twitools/src/twitter-utilities/sbt:/Users/vlin/.twitools/src/twitter-utilities/sbt11:/Users/vlin/.twitools/src/twitter-utilities/bin
-
-export CC=/opt/twitter/bin/gcc-4.2
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 export LC_CTYPE=en_US.UTF-8
 export CLICOLOR=1
 export HISTCONTROL=erasedups
 export HISTSIZE=100000
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+export JAVA8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home
+export JAVA7_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
+export JAVA_HOME=$JAVA8_HOME
+export PATH=$JAVA_HOME/bin/:$PATH
+export EDITOR=vim
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+base16_flat
 
-## nvm
-[[ -e "/opt/twitter/nvm/nvm.sh" ]] && source "/opt/twitter/nvm/nvm.sh"
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-source ~/.local.bash
-
-function git_prompt_info() {
-  if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
-    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
-    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
-    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
-  fi
-}
-
-
+eval "$(rbenv init -)"
+source ~/.airlab/shellhelper.sh
+export NSS_DEFAULT_DB_TYPE=sql
+export NVM_DIR=~/.nvm
+[ -f `which fortune` ] && [ -f `which cowsay` ] && fortune | cowsay
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+# afdev
+export DATA_DIR=$HOME/airlab-beta/repos/data
+export AFDEV_HOST="i-0e0cbf43ab424efe4.inst.aws.airbnb.com"
+export AFDEV_PORT=61000 #CHOOSE A DIFFERENT PORT
+# optional
+export AFDEV_USER="victor_lin"
+zprof

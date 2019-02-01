@@ -4,4 +4,6 @@
 .vim/doc/tags
 .vim/doc/command-t.txt
 .vim/bundle/*
+*.swo
+*.swp
 

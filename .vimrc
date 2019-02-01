@@ -4,77 +4,115 @@
 "  :20  :  up to 20 lines of command-line history will be remembered
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
-set viminfo='10,\"100,:20,%,n~/.viminfo
-autocmd!
+set encoding=utf-8
 set nocompatible
-set rtp+=~/.vim/bundle/vundle/
+autocmd!
+set wrap
 set clipboard=unnamed
-call vundle#rc()
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
+set title
+set updatetime=250
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails'
-Bundle 'bling/vim-airline'
-Bundle 'scrooloose/nerdtree'
-Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'gorodinskiy/vim-coloresque'
-Bundle 'mustache/vim-mode'
-Bundle 'chriskempson/base16-vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'jnurmine/zenburn'
-Plugin 'pangloss/vim-javascript'
-Plugin 'ervandew/supertab'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'wincent/Command-T'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'skwp/vim-colors-solarized'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'sheerun/vim-polyglot'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'k0kubun/vim-open-github'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'w0rp/ale'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'Valloric/YouCompleteMe', {
+  \   'build_commands': ['python'],
+  \   'build': {
+  \      'others': "python install.py --tern-completer"
+  \    }
+  \ }
+NeoBundle 'gorodinskiy/vim-coloresque'
+NeoBundle 'vim-airline/vim-airline'
+" NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'thoughtbot/vim-rspec'
+NeoBundle 'wincent/Command-T', {
+  \   'build_commands': ['make', 'ruby'],
+  \   'build': {
+  \      'others': 'cd ruby/command-t/ext/command-t && { make clean; ruby extconf.rb && make }'
+  \   }
+  \ }
+NeoBundle 'chriskempson/base16-vim'
+NeoBundle 'galooshi/vim-import-js'
+call neobundle#end()
+NeoBundleCheck
 
-let g:ctrlp_map='<leader>f'
-let g:ctrlp_show_hidden=0
-let g:ctrlp_match_window_reversed=1
-let g:ctrlp_match_window_bottom=0
-let g:ctrlp_max_height=30
-let g:ctrlp_working_path_mode='a'
-let g:ctrlp_max_files=0
+let g:ale_ruby_rubocop_options = '-c .rubocop.yml'
+let g:ale_lint_delay = 250
+let g:ale_open_list = 0
+let g:ale_linters = {'java': [], 'ruby': ['rubocop']}
+let g:ale_lint_on_enter = 1
+let g:ale_fixers = {
+\ 'javascript': ['eslint'],
+\ }
+let g:ale_javascript_eslint_suppress_eslintignore = 1
+
+let g:indentLine_enabled = 1
+
 nnoremap <leader>f :CommandT<CR>
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
 
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
 
-let g:ackprg = '/opt/twitter/bin/ag --nogroup --nocolor --column'
-let g:CommandTFileScanner = "find"
-let g:CommandTMatchWindowAtTop = 1
+let g:ackprg = 'ag --vimgrep'
+let g:CommandTMaxHeight = 25
+let g:CommandTFileScanner = "watchman"
+let g:CommandTGitIncludeUntracked = 1
+let g:CommandTInputDebounce = 50
+let g:CommandTMatchWindowAtTop = 0
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTTraverseSCM = "pwd"
+let g:ycm_filetype_blacklist = { 'yaml' : 0 }
+let g:ycm_auto_trigger = 1
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
 
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+let g:lightline = {
+  \ 'active': {
+    \ 'left': [ [ 'mode', 'paste' ],
+    \           [ 'readonly', 'relativepath', 'modified' ] ],
+    \ 'right': [ [ 'lineinfo' ],
+    \            [ 'percent' ],
+    \            [ 'fileformat', 'fileencoding', 'filetype' ] ] }
+\ }
 
 " move between splits without having to C-w first
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-h> <C-w>h
-map <C-l> <C-w>l
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
 
-" Make a backup before overwriting a file.  The backup is removed 
+" Make a backup before overwriting a file.  The backup is removed
 " after the file was successfully written
 set writebackup
 set equalalways
+set eadirection=hor
 
-set ruler		" Show the cursor position all the time 
-set expandtab " death to spaces		
+set ruler		" Show the cursor position all the time
 set showmatch		" Match Parens
 set matchtime=500	" Match for half a second
 set autoindent		" Always have autoindenting on
+set smartindent
+set expandtab
 set shiftwidth=2	" Autoindenting uses this spacing
 set tabstop=2	 	" Show tabs as 4 spaces
-set smarttab		
+set smarttab
 set shiftround		" Round to the nearest indent level
 set pastetoggle=<F3>	" Toggle our paste mode to not indent
 set number			" show line numbers
-set cursorline " highlight current line
+set cursorline
 
 " Better search options
 set smartcase
@@ -96,23 +134,23 @@ filetype indent on
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 if has('gui_running')
-  set guifont=Inconsolata\ XL:h12
+  set guifont=Inconsolata\ for\ Powerline:h14
+  colorscheme base16-github
   set antialias
-  set bg=dark
-  colorscheme base16-railscasts
 else
+  if filereadable(expand("~/.vimrc_background"))
+    let base16colorspace=256
+    source ~/.vimrc_background
+  endif
   set bg=dark
-  colorscheme jellybeans
 endif
-let g:tagbar_ctags_bin="/opt/twitter/bin/ctags"
+let g:tagbar_ctags_bin="ctags"
 
 " Show trailing whitepace and spaces before a tab:
 highlight ExtraWhitespace ctermbg=Red guibg=Red
 autocmd Syntax * syn match ExtraWhitespace /\s\+$/ containedin=ALL
 
 " Make sure splits stay sized when window is resized
-autocmd VimResized * wincmd =
-
 set laststatus=2
 
 set wildignore +=.git,vendor/bundle,.swp.orig,*/tmp/*,*.txt,*.class,*/macaw/target/*,*/node_modules/*,*/target/*
@@ -148,12 +186,12 @@ set formatoptions=cqnb
 autocmd BufReadPost fugitive://* set bufhidden=delete
 autocmd FileType scala 2match ErrorMsg '\%120v.'
 
-set textwidth=80
-
 runtime! macros/matchit.vim
 
 let g:mustache_abbreviations = 1
 
 autocmd QuickFixCmdPost *grep* cwindow
 set shell=zsh
+autocmd VimResized * wincmd =
+let g:airline_powerline_fonts = 1
 
