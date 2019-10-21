@@ -1,0 +1,11 @@
+{
+  "suggest.enablePreview": true,
+  "suggest.floatEnable": true,
+  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "tsserver.enableJavascript": true,
+  "tsserver.npm": "/Users/victor_lin/.nvm/versions/node/v8.9.1/bin/npm",
+  "npm.binPath": "/Users/victor_lin/.nvm/versions/node/v10.16.0/bin/npm",
+  "coc.preferences.colorSupport": true,
+  "tsserver.implicitProjectConfig.checkJs": false,
+  "typescript.useBatchedBufferSync": true
+}
