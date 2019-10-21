@@ -6,34 +6,36 @@
 "  n... :  where to save the viminfo files
 set encoding=utf-8
 set nocompatible
+set hidden
+set cmdheight=2
 autocmd!
 set wrap
 set clipboard=unnamed
 set runtimepath+=~/.vim/bundle/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 set title
-set updatetime=250
+set updatetime=200
+set shortmess+=c
+set termguicolors
 
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'skwp/vim-colors-solarized'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'k0kubun/vim-open-github'
 NeoBundle 'mileszs/ack.vim'
-NeoBundle 'w0rp/ale'
+"NeoBundle 'w0rp/ale'
 NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'Valloric/YouCompleteMe', {
-  \   'build_commands': ['python'],
-  \   'build': {
-  \      'others': "python install.py --tern-completer"
-  \    }
-  \ }
+NeoBundle 'neoclide/coc.nvim', 'release', { 'build': { 'others': 'git checkout release' } }
+"NeoBundle 'Valloric/YouCompleteMe', {
+"  \   'build_commands': ['python'],
+"  \   'build': {
+"  \      'others': "python install.py --ts-completer"
+"  \    }
+"  \ }
 NeoBundle 'gorodinskiy/vim-coloresque'
 NeoBundle 'vim-airline/vim-airline'
 " NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'thoughtbot/vim-rspec'
 NeoBundle 'wincent/Command-T', {
   \   'build_commands': ['make', 'ruby'],
   \   'build': {
@@ -41,25 +43,25 @@ NeoBundle 'wincent/Command-T', {
   \   }
   \ }
 NeoBundle 'chriskempson/base16-vim'
-NeoBundle 'galooshi/vim-import-js'
 call neobundle#end()
 NeoBundleCheck
 
-let g:ale_ruby_rubocop_options = '-c .rubocop.yml'
-let g:ale_lint_delay = 250
-let g:ale_open_list = 0
-let g:ale_linters = {'java': [], 'ruby': ['rubocop']}
-let g:ale_lint_on_enter = 1
-let g:ale_fixers = {
-\ 'javascript': ['eslint'],
-\ }
-let g:ale_javascript_eslint_suppress_eslintignore = 1
-
+autocmd CursorHold * silent call CocActionAsync('highlight')
+let g:coc_node_path = '/Users/victor_lin/.nvm/versions/node/v10.16.0/bin/node'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:indentLine_enabled = 1
+set completeopt+=menu,preview
+nmap <D-d> <Plug>(coc-definition)
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 nnoremap <leader>f :CommandT<CR>
-nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
-
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
+"autocmd CursorHold * silent :YcmCompleter GetType
 " allow backspacing over everything in insert mode
 set backspace=eol,indent,start
 
@@ -71,13 +73,24 @@ let g:CommandTInputDebounce = 50
 let g:CommandTMatchWindowAtTop = 0
 let g:CommandTMatchWindowReverse = 1
 let g:CommandTTraverseSCM = "pwd"
-let g:ycm_filetype_blacklist = { 'yaml' : 0 }
-let g:ycm_auto_trigger = 1
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_min_num_of_chars_for_completion = 2
-let g:ycm_seed_identifiers_with_syntax = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+"let g:ycm_filetype_blacklist = { 'yaml' : 0 }
+"let g:ycm_show_diagnostics_ui = 0
+"let g:ycm_auto_trigger = 1
+"let g:ycm_add_preview_to_completeopt = 1
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_min_num_of_chars_for_completion = 1
+"let g:ycm_seed_identifiers_with_syntax = 1
+"let g:ycm_collect_identifiers_from_tags_files = 1
 
 let g:lightline = {
   \ 'active': {
@@ -133,18 +146,13 @@ filetype indent on
 " Put cursor where you were when you last edited file
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-if has('gui_running')
-  set guifont=Inconsolata\ for\ Powerline:h14
-  colorscheme base16-github
-  set antialias
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
 else
-  if filereadable(expand("~/.vimrc_background"))
-    let base16colorspace=256
-    source ~/.vimrc_background
-  endif
+  colorscheme base16-chalk
   set bg=dark
 endif
-let g:tagbar_ctags_bin="ctags"
 
 " Show trailing whitepace and spaces before a tab:
 highlight ExtraWhitespace ctermbg=Red guibg=Red
@@ -154,10 +162,18 @@ autocmd Syntax * syn match ExtraWhitespace /\s\+$/ containedin=ALL
 set laststatus=2
 
 set wildignore +=.git,vendor/bundle,.swp.orig,*/tmp/*,*.txt,*.class,*/macaw/target/*,*/node_modules/*,*/target/*
-let Tlist_Use_Right_Window = 1
 
-" Map F4 to show taglist (requires ctags+ctags vim plugin)
-nnoremap <Leader>s :%s/\<<C-r><C-w>\>/
+"let g:ale_ruby_rubocop_options = '-c .rubocop.yml'
+"let g:ale_lint_delay = 1000
+"let g:ale_lint_on_text_changed = 'normal'
+"let g:ale_open_list = 0
+"let g:ale_linters = {'java': [], 'ruby': ['rubocop']}
+"let g:ale_lint_on_enter = 1
+"let g:ale_fixers = {
+"\ 'javascript': ['eslint'],
+"\ 'typescript': ['eslint'],
+"\ }
+"let g:ale_javascript_eslint_suppress_eslintignore = 1
 
 " Fix the damn typos
 command! Q  quit
@@ -191,7 +207,7 @@ runtime! macros/matchit.vim
 let g:mustache_abbreviations = 1
 
 autocmd QuickFixCmdPost *grep* cwindow
-set shell=zsh
+set shell=/bin/sh
 autocmd VimResized * wincmd =
 let g:airline_powerline_fonts = 1
 
